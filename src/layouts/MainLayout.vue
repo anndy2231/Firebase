@@ -10,7 +10,7 @@
           aria-label="Menu"
           @click="toggleLeftDrawer"
         />
-        <q-toolbar-title> My App </q-toolbar-title>
+        <q-toolbar-title>KND</q-toolbar-title>
         <q-toolbar-title>
           {{ currentMonth }}월 {{ currentDate }}일 {{ currentHours }}:{{
             currentMinutes
@@ -18,7 +18,7 @@
           <q-spinner-hourglass color="white"></q-spinner-hourglass
         ></q-toolbar-title>
 
-        <div>님 반갑습니다</div>
+        <div>KND</div>
       </q-toolbar>
     </q-header>
 
