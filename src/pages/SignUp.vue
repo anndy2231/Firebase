@@ -139,7 +139,7 @@
           v-model="date"
           filled
           type="date"
-          hint="오른쪽 '달력' 버튼을 클릭해주세요"
+          hint="오른쪽에 있는 버튼을 클릭해주세요"
           ><template v-slot:prepend
             ><div
               style="font-size: 11px; font-weight: bolder; text-align: center"
