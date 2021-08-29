@@ -11,7 +11,7 @@
           @click="toggleLeftDrawer"
         />
         <q-toolbar-title>KND</q-toolbar-title>
-        <q-toolbar-title>
+        <q-toolbar-title style="padding-right: 150px">
           {{ currentMonth }}월 {{ currentDate }}일 {{ currentHours }}:{{
             currentMinutes
           }}:{{ currentSeconds }}

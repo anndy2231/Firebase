@@ -1,8 +1,9 @@
 <template>
   <q-page class="text-center q-pa-xl">
     <p class="text-bold" style="font-size: 60px; color: darkslateblue">
-      Welcome!
+      Welcome
     </p>
+    <p style="font-size: 15px; color: darkslateblue">환영합니다</p>
 
     <div class="q-pa-lg">
       <div class="q-gutter-lg">
