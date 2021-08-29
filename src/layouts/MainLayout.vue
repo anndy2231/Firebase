@@ -10,10 +10,11 @@
           aria-label="Menu"
           @click="toggleLeftDrawer"
         />
-        <q-toolbar-title> Fancy App </q-toolbar-title>
-        <q-toolbar-title style="padding-right: 210px">
-          {{ currentYear }}년 {{ currentMonth }}월 {{ currentDate }}일
-          {{ currentHours }}:{{ currentMinutes }}:{{ currentSeconds }}
+        <q-toolbar-title> My App </q-toolbar-title>
+        <q-toolbar-title style="padding-right: 150px">
+          {{ currentMonth }}월 {{ currentDate }}일 {{ currentHours }}:{{
+            currentMinutes
+          }}:{{ currentSeconds }}
           <q-spinner-hourglass color="white"></q-spinner-hourglass
         ></q-toolbar-title>
 
@@ -100,7 +101,6 @@ export default defineComponent({
 
   setup() {
     const leftDrawerOpen = ref(false);
-    var currentYear = ref();
     var currentMonth = ref();
     var currentDate = ref();
     var currentHours = ref();
@@ -112,7 +112,6 @@ export default defineComponent({
       toggleLeftDrawer() {
         leftDrawerOpen.value = !leftDrawerOpen.value;
       },
-      currentYear,
       currentMonth,
       currentDate,
       currentHours,
@@ -121,7 +120,6 @@ export default defineComponent({
       getTime() {
         setInterval(() => {
           var today = new Date();
-          currentYear.value = ref(today.getFullYear());
           currentMonth.value = ref(today.getMonth() + 1);
           currentDate.value = ref(today.getDate());
           currentHours.value = ref(today.getHours());

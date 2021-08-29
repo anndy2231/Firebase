@@ -1,13 +1,11 @@
 <template>
   <q-page class="text-center q-pa-xl">
-    <p
-      class="text-weight-medium"
-      style="font-size: 100px; color: darkslateblue"
-    >
+    <p class="text-bold" style="font-size: 60px; color: darkslateblue">
       Sign Up
     </p>
+    <p style="font-size: 15px; color: darkslateblue">회원가입</p>
 
-    <div class="q-pa-xl">
+    <div class="q-pa-lg">
       <div class="q-gutter-lg">
         <q-input
           v-model="userName"
