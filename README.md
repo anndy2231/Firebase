@@ -1,6 +1,10 @@
-# practice2 (practice2)
+[![Netlify Status](https://api.netlify.com/api/v1/badges/90ace275-59eb-4688-9967-457304ab0192/deploy-status)](https://app.netlify.com/sites/firebase-knduck/deploys)
+https://firebase-knduck.netlify.app/#/
 
-practice2
+
+# practice2
+
+This is a simple web project based on firebase.
 
 ## Install the dependencies
 ```bash
