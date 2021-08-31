@@ -8,17 +8,16 @@
     <div class="q-pa-lg">
       <div class="q-gutter-lg">
         <q-input
-          v-model="userId"
+          v-model="email"
           color="purple"
           filled
-          label="ID"
-          hint="아이디를 입력해주세요"
-          ><template v-slot:prepend>
-            <q-icon name="format_size"></q-icon> </template
+          label="E-mail"
+          hint="이메일을 입력해주세요"
+          ><template v-slot:prepend><q-icon name="mail"></q-icon></template
           ><template v-slot:append>
             <q-icon
               name="close"
-              @click="userId = ''"
+              @click="email = ''"
               class="cursor-pointer"
             ></q-icon> </template
         ></q-input>
@@ -53,19 +52,45 @@
 
 <script>
 import { defineComponent } from "vue";
+import { auth } from "src/boot/firebase";
 
 export default defineComponent({
-  name: "Login",
+  name: "signin",
   data() {
     return {
-      userId: "",
+      email: "",
       password: "",
       isPwd: true,
     };
   },
   methods: {
     login() {
-      alert(this.userId);
+      auth
+        .signInWithEmailAndPassword(this.email, this.password)
+        .then((userCredential) => {
+          var user = userCredential.user;
+          console.log("success", user.email);
+
+          this.$q.notify({
+            position: "top",
+            message: "Login Success",
+            color: "blue",
+            type: "positive",
+          });
+          this.$router.push({ path: "index" });
+        })
+        .catch((error) => {
+          var errorCode = error.code;
+          var errorMessage = error.message;
+          console.log(errorCode);
+          console.log(errorMessage);
+          this.$q.notify({
+            position: "top",
+            message: errorMessage,
+            color: "red",
+            type: "negative",
+          });
+        });
     },
   },
 });
