@@ -4,7 +4,7 @@
       Index Page
     </p>
     <div class="q-pa-lg" v-if="isUserAuth">
-      <div>{{ getFireUser.email }}님이 로그인하셨습니다.{{ isUserAuth }}</div>
+      <div>{{ getFireUser.email }}님이 로그인하셨습니다.</div>
 
       <div class="q-pa-lg">
         <q-btn color="purple" label="로그아웃" @click="logout"></q-btn>
@@ -12,7 +12,6 @@
     </div>
     <div class="q-pa-lg" v-if="!isUserAuth">
       <div style="font-size: 20px">로그아웃 완료</div>
-      <div>{{ isUserAuth }}</div>
     </div>
 
     <router-link to="/" style="text-decoration: none">
