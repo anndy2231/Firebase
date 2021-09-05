@@ -53,6 +53,8 @@
 <script>
 import { defineComponent } from "vue";
 import { auth } from "src/boot/firebase";
+import { useQuasar } from "quasar";
+import { useStore } from "vuex";
 
 export default defineComponent({
   name: "signin",
@@ -70,6 +72,7 @@ export default defineComponent({
         .then((userCredential) => {
           var user = userCredential.user;
           console.log("success", user.email);
+          this.$store.commit("setFireUser", user);
 
           this.$q.notify({
             position: "top",
