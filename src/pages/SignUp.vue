@@ -59,7 +59,7 @@
           ]"
         >
           <template v-slot:prepend
-            ><q-icon class="cursor-pointer" name="font_download"></q-icon
+            ><q-icon name="font_download"></q-icon
           ></template>
           <template v-slot:append>
             <q-icon
@@ -70,7 +70,7 @@
           </template>
         </q-input>
 
-        <!-- <q-input
+        <q-input
           v-model="userName"
           color="purple"
           filled
@@ -129,7 +129,7 @@
               Birth
             </div></template
           ></q-input
-        > -->
+        >
       </div>
     </div>
 
@@ -142,7 +142,7 @@
 
 <script>
 import { defineComponent } from "vue";
-import { auth } from "src/boot/firebase";
+import { auth, db } from "src/boot/firebase";
 
 export default defineComponent({
   name: "signup",
@@ -151,11 +151,11 @@ export default defineComponent({
       email: "",
       password: "",
       passwordConfirm: "",
-      // userName: "",
-      // gender: "",
-      // genderOptions: ["남성", "여성"],
-      // phone: "",
-      // date: "",
+      userName: "",
+      gender: "",
+      genderOptions: ["남성", "여성"],
+      phone: "",
+      date: "",
       isPwd: true,
       isPwd2: true,
     };
@@ -189,6 +189,28 @@ export default defineComponent({
           type: "negative",
         });
       } else {
+        db.collection("users")
+          .add({
+            id: this.email,
+            name: this.userName,
+            gender: this.gender,
+            phone: this.phone,
+            birthdate: this.date,
+          })
+          .then((docRef) => {
+            console.log("Document written with ID: ", docRef.id);
+            this.$q.notify({
+              message: "Register Success",
+              color: "blue",
+            });
+          })
+          .catch((error) => {
+            console.error("Error adding document: ", error);
+            this.$q.notify({
+              message: error,
+              color: "red",
+            });
+          });
         this.signup();
       }
     },

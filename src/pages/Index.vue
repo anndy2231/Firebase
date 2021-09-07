@@ -4,7 +4,8 @@
       Index Page
     </p>
     <div class="q-pa-lg" v-if="isUserAuth">
-      <div>{{ getFireUser.email }}님이 로그인하셨습니다.</div>
+      <div>{{ getFireUser.email }} 로그인</div>
+      <div style="padding: 10px">{{ userName }}님 반갑습니다!</div>
 
       <div class="q-pa-lg">
         <q-btn color="purple" label="로그아웃" @click="logout"></q-btn>
@@ -22,7 +23,7 @@
 
 <script>
 import { defineComponent } from "vue";
-import { auth } from "src/boot/firebase";
+import { auth, db } from "src/boot/firebase";
 import { mapActions, mapGetters } from "vuex";
 import firebase from "firebase/app";
 
@@ -30,7 +31,7 @@ export default defineComponent({
   name: "Index",
   data() {
     return {
-      count: null,
+      userName: "",
     };
   },
   computed: {
@@ -45,9 +46,25 @@ export default defineComponent({
     },
     ...mapActions(["signOutAction", "authAction"]),
   },
-  // created() {
-  //   this.authAction();
-  // },
+
+  mounted() {
+    console.log("mounted");
+    if (this.getFireUser != null) {
+      db.collection("users")
+        .where("id", "==", this.getFireUser.email)
+        .get()
+        .then((querySnapshot) => {
+          querySnapshot.forEach((doc) => {
+            // doc.data() is never undefined for query doc snapshots
+            console.log(doc.id, " => ", doc.data());
+            this.userName = doc.data().name;
+          });
+        })
+        .catch((error) => {
+          console.log("Error getting documents: ", error);
+        });
+    }
+  },
 });
 </script>
 
