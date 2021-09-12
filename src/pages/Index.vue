@@ -10,6 +10,14 @@
       <div class="q-pa-lg">
         <q-btn color="purple" label="로그아웃" @click="logout"></q-btn>
       </div>
+
+      <div class="q-pa-lg">
+        <q-btn
+          color="purple"
+          label="마이페이지"
+          @click="$router.replace('/myinfo')"
+        ></q-btn>
+      </div>
     </div>
     <div class="q-pa-lg" v-if="!isUserAuth">
       <div style="font-size: 20px">로그아웃 완료</div>

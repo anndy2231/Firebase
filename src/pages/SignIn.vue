@@ -41,6 +41,8 @@
         </q-input>
       </div>
     </div>
+
+    <q-checkbox v-model="remember" label="ID 기억하기" color="teal" />
     <div class="q-pa-lg">
       <q-btn color="purple" label="로그인" @click="login"></q-btn>
     </div>
@@ -63,6 +65,7 @@ export default defineComponent({
       email: "",
       password: "",
       isPwd: true,
+      remember: false,
     };
   },
   methods: {
@@ -73,6 +76,14 @@ export default defineComponent({
           var user = userCredential.user;
           console.log("success", user.email);
           this.$store.commit("setFireUser", user);
+
+          if (this.remember == true) {
+            localStorage.username = this.email;
+            localStorage.checkbox = this.remember;
+          } else {
+            localStorage.username = "";
+            localStorage.checkbox = "";
+          }
 
           this.$q.notify({
             position: "top",
@@ -95,6 +106,14 @@ export default defineComponent({
           });
         });
     },
+  },
+  mounted() {
+    if (localStorage.checkbox && localStorage.checkbox !== "") {
+      this.remember = true;
+      this.email = localStorage.username;
+    } else {
+      this.remember = false;
+    }
   },
 });
 </script>

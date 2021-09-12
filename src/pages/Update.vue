@@ -1,9 +1,9 @@
 <template>
   <q-page class="text-center q-pa-xl">
     <p class="text-bold" style="font-size: 60px; color: darkslateblue">
-      Sign Up
+      Update
     </p>
-    <p style="font-size: 15px; color: darkslateblue">회원가입</p>
+    <p style="font-size: 15px; color: darkslateblue">회원정보수정</p>
 
     <div class="q-pa-lg">
       <div class="q-gutter-lg">
@@ -133,9 +133,9 @@
       </div>
     </div>
 
-    <q-btn color="purple" label="회원가입" @click="validation"></q-btn>
-    <router-link to="/" style="text-decoration: none">
-      <p style="padding: 30px">로그인 화면으로</p></router-link
+    <q-btn color="purple" label="수정완료" @click="validation"></q-btn>
+    <router-link to="/index" style="text-decoration: none">
+      <p style="padding: 30px">메인 화면으로</p></router-link
     >
   </q-page>
 </template>
@@ -143,9 +143,11 @@
 <script>
 import { defineComponent } from "vue";
 import { auth, db } from "src/boot/firebase";
+import { mapGetters } from "vuex";
+import firebase from "firebase/app";
 
 export default defineComponent({
-  name: "signup",
+  name: "update",
   data() {
     return {
       email: "",
@@ -159,6 +161,9 @@ export default defineComponent({
       isPwd: true,
       isPwd2: true,
     };
+  },
+  computed: {
+    ...mapGetters(["getFireUser"]),
   },
   methods: {
     validation() {
@@ -189,60 +194,64 @@ export default defineComponent({
           type: "negative",
         });
       } else {
-        db.collection("users")
-          .add({
-            id: this.email,
-            name: this.userName,
-            gender: this.gender,
-            phone: this.phone,
-            birthdate: this.date,
-          })
-          .then((docRef) => {
-            console.log("Document written with ID: ", docRef.id);
-            this.$q.notify({
-              message: "Register Success",
-              color: "blue",
-            });
-          })
-          .catch((error) => {
-            console.error("Error adding document: ", error);
-            this.$q.notify({
-              message: error,
-              color: "red",
-            });
-          });
-        this.signup();
+        this.update();
       }
     },
-    signup() {
-      auth
-        .createUserWithEmailAndPassword(this.email, this.password)
-        .then((userCredential) => {
-          var user = userCredential.user;
-          console.log("success", user.email);
-          user.updateProfile({
-            displayName: this.userName,
-          });
-          this.$q.notify({
-            position: "top",
-            message: "SignUp Success",
-            color: "blue",
-            type: "positive",
-          });
-          this.$router.push({ path: "/" });
-        })
-        .catch((error) => {
-          var errorCode = error.code;
-          var errorMessage = error.message;
-
-          this.$q.notify({
-            position: "top",
-            message: errorMessage,
-            color: "red",
-            type: "negative",
-          });
-        });
+    update() {
+      // const user = firebase.auth().currentUser;
+      // user
+      //   .updateEmail(this.email)
+      //   .updatePassword(this.password)
+      //   .then((userCredential) => {
+      //     var user = userCredential.user;
+      //     console.log("update success", user.email);
+      //     user.updateProfile({
+      //       displayName: this.userName,
+      //     });
+      //     this.$q.notify({
+      //       position: "top",
+      //       message: "Update Success",
+      //       color: "blue",
+      //       type: "positive",
+      //     });
+      //     this.$router.push({ path: "/" });
+      //   })
+      //   .catch((error) => {
+      //     var errorMessage = error.message;
+      //     this.$q.notify({
+      //       position: "top",
+      //       message: errorMessage,
+      //       color: "red",
+      //       type: "negative",
+      //     });
+      //   });
+      this.$q.notify({
+        position: "top",
+        message: "아직 미완성",
+        color: "red",
+        type: "negative",
+      });
     },
+  },
+  mounted() {
+    console.log("Update mounted");
+    db.collection("users")
+      .where("id", "==", this.getFireUser.email)
+      .get()
+      .then((querySnapshot) => {
+        querySnapshot.forEach((doc) => {
+          console.log(doc.id, " => ", doc.data());
+          var docVal = doc.data();
+          this.email = docVal.id;
+          this.userName = docVal.name;
+          this.gender = docVal.gender;
+          this.phone = docVal.phone;
+          this.date = docVal.birthdate;
+        });
+      })
+      .catch((error) => {
+        console.log("Error getting documents: ", error);
+      });
   },
 });
 </script>
