@@ -41,10 +41,31 @@
         </q-input>
       </div>
     </div>
-
     <q-checkbox v-model="remember" label="ID 기억하기" color="teal" />
-    <div class="q-pa-lg">
-      <q-btn color="purple" label="로그인" @click="login"></q-btn>
+    <div class="q-gutter-md">
+      <q-btn padding="none">
+        <img
+          src="../assets/google.png"
+          style="width: 200px"
+          @click="googleLogin"
+        />
+      </q-btn>
+      <q-btn padding="none">
+        <img
+          src="../assets/github.png"
+          style="width: 200px"
+          @click="githubLogin"
+        />
+      </q-btn>
+    </div>
+
+    <div class="q-pa-md">
+      <q-btn
+        color="purple"
+        style="width: 200px"
+        label="로그인"
+        @click="login"
+      ></q-btn>
     </div>
     <router-link to="/signup" style="text-decoration: none">
       <a>아직 회원가입을 안 하셨다구요? <br />여기를 클릭해주세요!</a>
@@ -54,9 +75,7 @@
 
 <script>
 import { defineComponent } from "vue";
-import { auth } from "src/boot/firebase";
-import { useQuasar } from "quasar";
-import { useStore } from "vuex";
+import { auth, g_auth, db } from "src/boot/firebase";
 
 export default defineComponent({
   name: "signin",
@@ -69,6 +88,114 @@ export default defineComponent({
     };
   },
   methods: {
+    googleLogin() {
+      var provider = new g_auth.GoogleAuthProvider();
+      auth
+        .signInWithPopup(provider)
+        .then((result) => {
+          var user = result.user;
+          this.$store.commit("setFireUser", user);
+          db.collection("users")
+            .where("id", "==", user.email)
+            .get()
+            .then((snapshot) => {
+              if (snapshot.empty == true) {
+                db.collection("users").add({
+                  id: user.email,
+                  name: user.displayName,
+                });
+                this.$q.notify({
+                  position: "top",
+                  message: "Login Success",
+                  color: "blue",
+                  type: "positive",
+                });
+                this.$router.push({ path: "index" });
+              } else {
+                console.log(snapshot);
+                snapshot.forEach((doc) => {
+                  db.collection("users").doc(doc.id).set({
+                    id: user.email,
+                    name: user.displayName,
+                  });
+                });
+                this.$q.notify({
+                  position: "top",
+                  message: "Login Success",
+                  color: "blue",
+                  type: "positive",
+                });
+                this.$router.push({ path: "index" });
+              }
+            });
+        })
+        .catch((error) => {
+          var errorCode = error.code;
+          var errorMessage = error.message;
+          console.log(errorCode);
+          console.log(errorMessage);
+          this.$q.notify({
+            position: "top",
+            message: errorMessage,
+            color: "red",
+            type: "negative",
+          });
+        });
+    },
+    githubLogin() {
+      var provider = new g_auth.GithubAuthProvider();
+      auth
+        .signInWithPopup(provider)
+        .then((result) => {
+          var user = result.user;
+          this.$store.commit("setFireUser", user);
+          db.collection("users")
+            .where("id", "==", user.email)
+            .get()
+            .then((snapshot) => {
+              if (snapshot.empty == true) {
+                db.collection("users").add({
+                  id: user.email,
+                  name: user.displayName,
+                });
+                this.$q.notify({
+                  position: "top",
+                  message: "Login Success",
+                  color: "blue",
+                  type: "positive",
+                });
+                this.$router.push({ path: "index" });
+              } else {
+                console.log("github >>", snapshot);
+                snapshot.forEach((doc) => {
+                  db.collection("users").doc(doc.id).set({
+                    id: user.email,
+                    name: user.displayName,
+                  });
+                  this.$q.notify({
+                    position: "top",
+                    message: "Login Success",
+                    color: "blue",
+                    type: "positive",
+                  });
+                  this.$router.push({ path: "index" });
+                });
+              }
+            });
+        })
+        .catch((error) => {
+          var errorCode = error.code;
+          var errorMessage = error.message;
+          console.log(errorCode);
+          console.log(errorMessage);
+          this.$q.notify({
+            position: "top",
+            message: errorMessage,
+            color: "red",
+            type: "negative",
+          });
+        });
+    },
     login() {
       auth
         .signInWithEmailAndPassword(this.email, this.password)
