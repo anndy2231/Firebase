@@ -42,7 +42,7 @@
       </div>
     </div>
     <q-checkbox v-model="remember" label="ID 기억하기" color="teal" />
-    <div class="q-gutter-md">
+    <div class="q-pa-sm">
       <q-btn padding="none">
         <img
           src="../assets/google.png"
@@ -50,6 +50,8 @@
           @click="googleLogin"
         />
       </q-btn>
+    </div>
+    <div class="q-pa-sm">
       <q-btn padding="none">
         <img
           src="../assets/github.png"
@@ -58,8 +60,7 @@
         />
       </q-btn>
     </div>
-
-    <div class="q-pa-md">
+    <div class="q-pa-sm">
       <q-btn
         color="purple"
         style="width: 200px"
@@ -67,9 +68,11 @@
         @click="login"
       ></q-btn>
     </div>
-    <router-link to="/signup" style="text-decoration: none">
-      <a>아직 회원가입을 안 하셨다구요? <br />여기를 클릭해주세요!</a>
-    </router-link>
+    <div class="q-pa-sm">
+      <router-link to="/signup" style="text-decoration: none">
+        <a>아직 회원가입을 안 하셨다구요? <br />여기를 클릭해주세요!</a>
+      </router-link>
+    </div>
   </q-page>
 </template>
 
