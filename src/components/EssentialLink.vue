@@ -1,16 +1,35 @@
 <template>
-  <q-item clickable tag="a" target="_blank" :href="link">
-    <q-item-section v-if="icon" avatar>
-      <q-icon :name="icon" />
-    </q-item-section>
+  <section v-if="external">
+    <q-item clickable tag="a" target="_blank" :href="link">
+      <q-item-section v-if="icon" avatar>
+        <q-icon :name="icon" />
+      </q-item-section>
 
-    <q-item-section>
-      <q-item-label>{{ title }}</q-item-label>
-      <q-item-label caption>
-        {{ caption }}
-      </q-item-label>
-    </q-item-section>
-  </q-item>
+      <q-item-section>
+        <q-item-label>{{ title }}</q-item-label>
+        <q-item-label caption>
+          {{ caption }}
+        </q-item-label>
+      </q-item-section>
+    </q-item>
+  </section>
+
+  <section v-else>
+    <router-link :to="link" style="text-decoration: none; color: inherit">
+      <q-item clickable tag="a">
+        <q-item-section v-if="icon" avatar>
+          <q-icon :name="icon" />
+        </q-item-section>
+
+        <q-item-section>
+          <q-item-label>{{ title }}</q-item-label>
+          <q-item-label caption>
+            {{ caption }}
+          </q-item-label>
+        </q-item-section>
+      </q-item>
+    </router-link>
+  </section>
 </template>
 
 <script>
@@ -37,6 +56,12 @@ export default defineComponent({
     icon: {
       type: String,
       default: "",
+    },
+
+    // 명시 안하면 external로 동작
+    external: {
+      type: Boolean,
+      default: true,
     },
   },
 });

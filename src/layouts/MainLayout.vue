@@ -58,34 +58,12 @@ const linksList = [
     link: "https://github.com/anndy2231",
   },
   {
-    title: "Discord Chat Channel",
-    caption: "chat.quasar.dev",
+    title: "인터널테스트",
+    caption: "Login",
     icon: "chat",
-    link: "https://chat.quasar.dev",
-  },
-  {
-    title: "Forum",
-    caption: "forum.quasar.dev",
-    icon: "record_voice_over",
-    link: "https://forum.quasar.dev",
-  },
-  {
-    title: "Twitter",
-    caption: "@quasarframework",
-    icon: "rss_feed",
-    link: "https://twitter.quasar.dev",
-  },
-  {
-    title: "Facebook",
-    caption: "@QuasarFramework",
-    icon: "public",
-    link: "https://facebook.quasar.dev",
-  },
-  {
-    title: "Quasar Awesome",
-    caption: "Community Quasar projects",
-    icon: "favorite",
-    link: "https://awesome.quasar.dev",
+    link: "/",
+    // false -> internal로 동작
+    external: false,
   },
 ];
 

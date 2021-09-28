@@ -198,32 +198,32 @@ export default defineComponent({
       }
     },
     update() {
-      auth
-        .updateEmail(this.email)
-        .updatePassword(this.password)
-        .then((userCredential) => {
-          var user = userCredential.user;
-          console.log("update success", user.email);
-          user.updateProfile({
-            displayName: this.userName,
-          });
-          this.$q.notify({
-            position: "top",
-            message: "Update Success",
-            color: "blue",
-            type: "positive",
-          });
-          this.$router.push({ path: "/" });
-        })
-        .catch((error) => {
-          var errorMessage = error.message;
-          this.$q.notify({
-            position: "top",
-            message: errorMessage,
-            color: "red",
-            type: "negative",
-          });
-        });
+      // auth
+      //   .updateEmail(this.email)
+      //   .updatePassword(this.password)
+      //   .then((userCredential) => {
+      //     var user = userCredential.user;
+      //     console.log("update success", user.email);
+      //     user.updateProfile({
+      //       displayName: this.userName,
+      //     });
+      //     this.$q.notify({
+      //       position: "top",
+      //       message: "Update Success",
+      //       color: "blue",
+      //       type: "positive",
+      //     });
+      //     this.$router.push({ path: "/" });
+      //   })
+      //   .catch((error) => {
+      //     var errorMessage = error.message;
+      //     this.$q.notify({
+      //       position: "top",
+      //       message: errorMessage,
+      //       color: "red",
+      //       type: "negative",
+      //     });
+      //   });
       this.$q.notify({
         position: "top",
         message: "아직 미완성",
