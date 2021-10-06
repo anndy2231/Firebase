@@ -21,13 +21,15 @@
       </q-toolbar>
     </q-header>
 
-    <q-drawer v-model="leftDrawerOpen" show-if-above bordered class="bg-grey-1">
+    <!-- 탭 열린 상태로 시작 : show-if-above bordered -->
+    <q-drawer v-model="leftDrawerOpen" bordered class="bg-grey-1">
       <q-list>
         <q-item-label header class="text-grey-8">
           Essential Links
         </q-item-label>
 
         <EssentialLink
+          v-on:closeDrawer="closeme"
           v-for="link in essentialLinks"
           :key="link.title"
           v-bind="link"
@@ -75,7 +77,12 @@ export default defineComponent({
   components: {
     EssentialLink,
   },
-
+  methods: {
+    closeme(param) {
+      console.log("event received" + param);
+      this.leftDrawerOpen = false;
+    },
+  },
   setup() {
     const leftDrawerOpen = ref(false);
     var currentMonth = ref();

@@ -1,6 +1,6 @@
 <template>
   <section v-if="external">
-    <q-item clickable tag="a" target="_blank" :href="link">
+    <q-item clickable tag="a" target="_blank" :href="link" @click="sendEvent">
       <q-item-section v-if="icon" avatar>
         <q-icon :name="icon" />
       </q-item-section>
@@ -62,6 +62,13 @@ export default defineComponent({
     external: {
       type: Boolean,
       default: true,
+    },
+  },
+
+  methods: {
+    sendEvent() {
+      this.$emit("closeDrawer");
+      console.log("emit emit");
     },
   },
 });

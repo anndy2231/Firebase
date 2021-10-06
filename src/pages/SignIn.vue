@@ -43,6 +43,14 @@
     </div>
     <q-checkbox v-model="remember" label="ID 기억하기" color="teal" />
     <div class="q-pa-sm">
+      <q-btn
+        color="purple"
+        style="width: 200px"
+        label="로그인"
+        @click="login"
+      ></q-btn>
+    </div>
+    <div class="q-pa-sm">
       <q-btn padding="none">
         <img
           src="../assets/google.png"
@@ -59,14 +67,6 @@
           @click="githubLogin"
         />
       </q-btn>
-    </div>
-    <div class="q-pa-sm">
-      <q-btn
-        color="purple"
-        style="width: 200px"
-        label="로그인"
-        @click="login"
-      ></q-btn>
     </div>
     <div class="q-pa-sm">
       <router-link to="/signup" style="text-decoration: none">
